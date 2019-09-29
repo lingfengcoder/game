@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    * {
+      padding: 0;
+      margin: 0
+    }
+
+    body {
+      background-color: #559678;
+    }
+
+    input {
+      color: #000000;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      height: 25px;
+    }
+
+    button {
+      background-image: none;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+      color: #000000;
+      background-color: #bfd44a;
+      border-color: #bfd44a;
+      padding: 12px;
+      color: #fff;
+    }
+
+    #endGameBtn {
+      background-color: #f15b5b;
+      border-color: #f15b5b;
+      display: none;
+    }
+
+    #restartBtn {
+      background-color: #4ad494;
+      border-color: #4ad494;
+      display: none;
+
+    }
+
+    #gameTitle {
+      text-align: center;
+      color: #fff;
+      font-family: cursive;
+      font-size: 40px;
+      /* background-color: #8893cc; */
+    }
+
+    /* 字体闪烁 */
+    /* span:nth-child(1) {
+      animation: blink 1s steps(1, start) 0.33s infinite;
+    }*/
+
+
+    span:nth-child(0) {
+      animation: blink 1s steps(1, start) 0.33s infinite;
+    }
+
+    /* span:nth-child(4) {
+      animation: blink 1s steps(1, start) 0.66s infinite;
+    }
+
+    span:nth-child(5) {
+      animation: blink 1s steps(1, start) 0.33s infinite;
+    }
+
+    span:nth-child(6) {
+      animation: blink 1s steps(1, start) 0.66s infinite;
+    } */
+
+    @keyframes blink {
+      33% {
+        color: #4a61d4;
+      }
+
+      66% {
+        color: #fff;
+      }
+    }
+
+    /* 字体滚动 */
+
+    .animate {
+      padding-left: 20px;
+      font-size: 12px;
+      color: #000;
+      display: inline-block;
+      white-space: nowrap;
+      animation: 8s wordsLoop linear infinite normal;
+    }
+
+    @keyframes wordsLoop {
+      0% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(200%);
+        -webkit-transform: translateX(200%);
+      }
+
+      100% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+      }
+
+      200% {
+        transform: translateX(150%);
+        -webkit-transform: translateX(150%);
+      }
+
+    }
+    .rank-outer{
+      display: flex;
+    }
+
+    .ranks {
+      width: 50%;
+      /* height: 240px; */
+      /* overflow: auto; */
+      background-color: #2583b54f;
+      color: #fff;
+      text-align: center;
+      /* margin-left: 0;
+      margin-right: 0;
+      margin: auto; */
+    }
+
+    .ranks div {
+      height: 240px;
+      overflow: auto;
+    }
+
+    /* 
+    @-webkit-keyframes wordsLoop {
+      0% {
+        transform: translateX(200px);
+        -webkit-transform: translateX(200px);
+      }
+
+      100% {
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+      }
+    } */
+
+    #catch-the-cat {
+      width: 100%;
+      margin-top: 32px;
+      text-align: center;
+    }
+  </style>
+  <title></title>
+</head>
+<script src="phaser.min.js"></script>
+
+<body>
+  <div id='root'>
+    <!-- style="text-align: center" -->
+    <p id="gameTitle" class="animate">
+
+      <span>抓不住的</span>
+      <span style="color: #000">罗小黑</span>
+
+      <span><img width="40px" src="cat.jpg" /></span>
+    </p>
+    <p style="text-align: center">version 1.1</p>
+    <!-- <p style="text-align: center" id="gameTitle">Nevery Catch Cat m~</p> -->
+    <div id="login" style="text-align:center;margin-top:5%;color: #fff">
+      请输入姓名:
+      <input id="name" />
+    </div>
+    <div style="text-align:center;margin-top:4%;">
+      <button id="startGameBtn">开始游戏</button>
+      <button id="endGameBtn">退出游戏</button>
+      <button id="restartBtn">重新开始</button>
+    </div>
+  </div>
+  <div style="margin-top: 30px" class="rank-outer">
+
+    <div class="ranks">
+      <p style="color: #4a61d4">成功排行榜</p>
+      <p style="margin: 5px;" id="successSelfRank">当前排行: </p>
+      <div>
+        <ul id="ranksUl" style="text-align: left;margin-left: 10px;">
+           
+        </ul>
+      </div>
+    </div>
+
+    <div class="ranks">
+        <p style="color: #000">失败排行榜</p>
+        <p style="margin: 5px;" id="failSelfRank">当前排行: </p>
+        <div>
+          <ul id="failRanksUl" style="text-align: left;margin-left: 10px;">
+             
+          </ul>
+        </div>
+    </div>
+
+  </div>
+
+  <div id="catch-the-cat"></div>
+  <!-- 留言板 -->
+  <div id="msgboard"></div>
+</body>
+
+<script>
+  window.game = new CatchTheCatGame({
+    w: 16,
+    h: 16,
+    r: 20,
+    backgroundColor: 0xffffff,
+    parent: 'catch-the-cat',
+    statusBarAlign: 'center',
+    // credit: 'github.com/ganlvtech'
+  });
+</script>
+
+<style>
+  .github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+  }
+
+  @keyframes octocat-wave {
+
+    0%,
+    100% {
+      transform: rotate(0)
+    }
+
+    20%,
+    60% {
+      transform: rotate(-25deg)
+    }
+
+    40%,
+    80% {
+      transform: rotate(10deg)
+    }
+  }
+
+  @media (max-width:500px) {
+    .github-corner:hover .octo-arm {
+      animation: none
+    }
+
+    .github-corner .octo-arm {
+      animation: octocat-wave 560ms ease-in-out
+    }
+  }
+</style>
+
+</html>
